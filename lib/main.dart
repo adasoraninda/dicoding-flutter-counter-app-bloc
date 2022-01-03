@@ -1,5 +1,4 @@
-import 'package:counter_app/counter_bloc.dart';
-import 'package:counter_app/counter_event.dart';
+import 'package:counter_app/counter_cubit.dart';
 import 'package:counter_app/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider<CounterBloc>(
-        create: (_) => CounterBloc(),
+      home: BlocProvider<CounterCubit>(
+        create: (_) => CounterCubit(),
         child: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
@@ -42,7 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: BlocBuilder<CounterBloc, CounterState>(builder: (context, state) {
+        body:
+            BlocBuilder<CounterCubit, CounterState>(builder: (context, state) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             FloatingActionButton(
               onPressed: () {
-                context.read<CounterBloc>().add(Decrement());
+                context.read<CounterCubit>().decrement();
               },
               tooltip: 'Decrement',
               child: const Icon(Icons.remove),
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(width: 8),
             FloatingActionButton(
               onPressed: () {
-                context.read<CounterBloc>().add(Increment());
+                context.read<CounterCubit>().increment();
               },
               tooltip: 'Increment',
               child: const Icon(Icons.add),
